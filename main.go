@@ -11,10 +11,10 @@ import (
 )
 
 const (
-	_  = iota
-	kb = 1 << (iota * 10)
-	mb
-	gb
+	_   = iota
+	KiB = 1 << (iota * 10)
+	MiB
+	GiB
 )
 
 var done = make(chan struct{})
@@ -92,16 +92,16 @@ func printDiskUsage(nfiles, nbytes int64, options *Options) {
 	var size float64
 	switch {
 	case options.K:
-		display = "Kb"
-		size = float64(nbytes) / kb
+		display = "KiB"
+		size = float64(nbytes) / KiB
 	case options.G:
-		display = "Gb"
-		size = float64(nbytes) / gb
+		display = "GiB"
+		size = float64(nbytes) / GiB
 	default:
-		display = "Mb"
-		size = float64(nbytes) / mb
+		display = "MiB"
+		size = float64(nbytes) / MiB
 	}
-	fmt.Printf("%d files %.1f %s\n", nfiles, size, display)
+	fmt.Printf("%d files %.2f %s\n", nfiles, size, display)
 }
 
 func walkDir(dir string, n *sync.WaitGroup, fileSizes chan<- int64) {
